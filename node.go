@@ -30,12 +30,14 @@ const (
 	UNUSED
 )
 
-// Node is a brigadier structure that defines a notchian command
-// and how it connects to other commands
+// Node is a brigadier structure that defines a notchian command and how it connects to other commands
 // Reference: https://wiki.vg/Command_Data
+// A node can be one of three types, ROOT, LITERAL, or ARGUMENT,
+// and can be serialized as a github.com/Tnze/go-mc packet
+// A Node's zero value is a ROOT node, with no options set
 type Node struct {
-	Flags           int8
-	Children        []int32
+	Flags           int8          // Flags for the node, contains type, and other configuration
+	Children        []int32       // Other command nodes that make up the rest of the commmand
 	RedirectNode    int32         // Optional, only if 0x08 of flags is set
 	Name            string        // Optional, only for ARGUMENT and LITERAL nodes
 	Parser          string        // Optional, only for ARGUMENT nodes
